@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 const Landing: React.FC = () => (
   <div>
     <h1>Landing</h1>
+    <Link to="/sign-in">
+      Sign In
+    </Link>
     <Link to="/sign-up">
       Sign Up
     </Link>
