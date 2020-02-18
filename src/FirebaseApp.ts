@@ -27,6 +27,8 @@ class FirebaseApp {
 
   createUser = (email: string, password: string) =>
     this.auth.createUserWithEmailAndPassword(email, password);
+
+  signOut = () => this.auth.signOut();
 };
 
 export const [FirebaseContextProvider, useFirebaseContext] =

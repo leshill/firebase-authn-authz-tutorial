@@ -1,9 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import { useFirebaseContext } from "FirebaseApp";
+
 const Navigation: React.FC = () => {
+  const firebase = useFirebaseContext();
+
   const onSignOutClicked = (event: React.MouseEvent) => {
-    alert("Sign out clicked");
+    firebase.signOut();
     event.preventDefault();
   };
 
