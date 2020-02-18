@@ -1,4 +1,5 @@
 import firebase from "firebase/app";
+import "firebase/auth";
 
 import useSafeContext from "utils/safeContext";
 
@@ -14,11 +15,18 @@ const config = {
 };
 
 class FirebaseApp {
+  auth: firebase.auth.Auth;
+
   constructor() {
     firebase.initializeApp(config);
+
+    this.auth = firebase.auth();
   }
 
   config = () => firebase.app().options;
+
+  createUser = (email: string, password: string) =>
+    this.auth.createUserWithEmailAndPassword(email, password);
 };
 
 export const [FirebaseContextProvider, useFirebaseContext] =

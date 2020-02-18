@@ -1,32 +1,49 @@
 import React, { useState } from "react";
 
+import { useFirebaseContext } from "FirebaseApp";
+
 const initialState = {
   email: "",
+  error: null as string | null,
   passwordOne: "",
   passwordTwo: ""
 };
 
 const SignUp: React.FC = () => {
+  const firebase = useFirebaseContext();
+
   const [creds, setCreds] = useState(initialState);
 
-  const { email, passwordOne, passwordTwo } = creds;
+  const { email, error, passwordOne, passwordTwo } = creds;
 
   const isInvalid = passwordOne !== passwordTwo ||
                     passwordOne === "" ||
                     email === "";
 
-  const onChange = (event: React.FormEvent<HTMLInputElement>) =>
-    setCreds({...creds, [event.currentTarget.name]: event.currentTarget.value});
+  const onChange = (event: React.FormEvent<HTMLInputElement>) => {
+    setCreds({
+      ...creds,
+      error: null,
+      [event.currentTarget.name]: event.currentTarget.value
+    });
+  }
 
   const onSubmit = (event: React.FormEvent) => {
-    alert(`Email: ${email} Password: ${passwordOne}`);
-    setCreds(initialState);
+    setCreds({ ...creds, error: null });
+    firebase.createUser(email, passwordOne)
+            .then(_authUser => {
+              setCreds({ ...initialState });
+            })
+            .catch(error => {
+              setCreds({ ...creds, error: error.message });
+            });
     event.preventDefault();
   };
 
   return (
     <div>
       <h1>Sign Up</h1>
+      {error && <p>{error}</p>}
       <form onSubmit={onSubmit}>
         <input
           name="email"
