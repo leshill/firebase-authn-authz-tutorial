@@ -1,7 +1,9 @@
 import firebase from "firebase/app";
 import "firebase/auth";
+import { Dispatch } from "redux";
 
 import useSafeContext from "utils/safeContext";
+import { userChanged } from "authSlice";
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -32,6 +34,15 @@ class FirebaseApp {
     firebase.auth().signInWithEmailAndPassword(email, password);
 
   signOut = () => this.auth.signOut();
+
+  trackAuthStateChanged = (dispatch: Dispatch) =>
+    firebase.auth().onAuthStateChanged((user: firebase.User | null) => {
+      if (user) {
+        dispatch(userChanged(user.toJSON()));
+      } else {
+        dispatch(userChanged(null));
+      }
+    });
 };
 
 export const [FirebaseContextProvider, useFirebaseContext] =
