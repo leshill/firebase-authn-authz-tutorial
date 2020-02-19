@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 
 import { useFirebaseContext } from "FirebaseApp";
-import { userChanged } from "authSlice";
 
 const initialState = {
   email: "",
@@ -12,7 +10,6 @@ const initialState = {
 
 const SignIn: React.FC = () => {
   const firebase = useFirebaseContext();
-  const dispatch = useDispatch();
 
   const [creds, setCreds] = useState(initialState);
 
@@ -34,7 +31,6 @@ const SignIn: React.FC = () => {
     firebase.signIn(email, password)
             .then(_authUser => {
               setCreds({ ...initialState });
-              dispatch(userChanged({name: "sign-in"}));
             })
             .catch(error => {
               setCreds({ ...creds, error: error.message });
