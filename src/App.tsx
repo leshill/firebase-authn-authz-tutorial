@@ -8,6 +8,7 @@ import Home from "Home";
 import Landing from "Landing";
 import SignIn from "SignIn";
 import SignUp from "SignUp";
+import TrackAuth from "TrackAuth";
 import FirebaseApp, { FirebaseContextProvider } from "FirebaseApp";
 
 const firebase = new FirebaseApp();
@@ -16,22 +17,24 @@ function App() {
   return (
     <Provider store={store}>
       <FirebaseContextProvider value={firebase}>
-        <BrowserRouter>
-          <div>
-            <header>
-              <Navigation/>
-            </header>
+        <TrackAuth>
+          <BrowserRouter>
             <div>
-              <Switch>
-                <Route exact path="/home" component={Home}/>
-                <Route exact path="/landing" component={Landing}/>
-                <Route exact path="/sign-in" component={SignIn}/>
-                <Route exact path="/sign-up" component={SignUp}/>
-                <Redirect from="/*" to="/landing"/>
-              </Switch>
+              <header>
+                <Navigation/>
+              </header>
+              <div>
+                <Switch>
+                  <Route exact path="/home" component={Home}/>
+                  <Route exact path="/landing" component={Landing}/>
+                  <Route exact path="/sign-in" component={SignIn}/>
+                  <Route exact path="/sign-up" component={SignUp}/>
+                  <Redirect from="/*" to="/landing"/>
+                </Switch>
+              </div>
             </div>
-          </div>
-        </BrowserRouter>
+          </BrowserRouter>
+        </TrackAuth>
       </FirebaseContextProvider>
     </Provider>
   );
