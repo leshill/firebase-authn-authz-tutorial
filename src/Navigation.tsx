@@ -26,6 +26,11 @@ const Authenticated: React.FC = () => {
         </Link>
       </li>
       <li>
+        <Link to="/admin">
+          Admin
+        </Link>
+      </li>
+      <li>
         <a href="#sign_out" onClick={onSignOutClicked}>
           Sign Out
         </a>
