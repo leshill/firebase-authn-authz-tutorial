@@ -38,7 +38,7 @@ class FirebaseApp {
   trackAuthStateChanged = (dispatch: Dispatch) =>
     firebase.auth().onAuthStateChanged((user: firebase.User | null) => {
       if (user) {
-        setTimeout(() => dispatch(userChanged(user.toJSON())), 3000);
+        dispatch(userChanged(user.toJSON()));
       } else {
         dispatch(userChanged(null));
       }
