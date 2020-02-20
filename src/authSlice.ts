@@ -4,8 +4,20 @@ type AuthState = {
   currentUser: any | null
 };
 
+const currentUser ="currentUser";
+
+function getLocalCurrentUser() {
+  let value = localStorage.getItem(currentUser);
+
+  if (value) {
+    value = JSON.parse(value);
+  }
+
+  return value;
+}
+
 const initialState: AuthState  = {
-  currentUser: null
+  currentUser: getLocalCurrentUser()
 };
 
 const authSlice = createSlice({
@@ -14,6 +26,16 @@ const authSlice = createSlice({
   reducers: {
     userChanged(state, action: PayloadAction<any | null>) {
       state.currentUser = action.payload;
+      try {
+        if (action.payload) {
+          localStorage.setItem(currentUser, JSON.stringify(action.payload));
+        } else {
+          localStorage.removeItem(currentUser);
+        }
+      }
+      catch (error) {
+        console.log("localStorage error:", error);
+      }
     }
   }
 });
