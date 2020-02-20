@@ -11,6 +11,12 @@ const Home: React.FC = () => {
       <p>
         The app config is {JSON.stringify(firebase.config())}.
       </p>
+      <p>
+        {
+          firebase.auth.currentUser ?
+          firebase.auth.currentUser.email : "Not signed in"
+        }
+      </p>
     </div>
   );
 };
