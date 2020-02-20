@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import { useFirebaseContext } from "FirebaseApp";
+import signedOutOnly from "signedOutOnly";
 
 const initialState = {
   email: "",
@@ -63,4 +64,4 @@ const SignIn: React.FC = () => {
   );
 };
 
-export default SignIn;
+export default signedOutOnly(SignIn);
