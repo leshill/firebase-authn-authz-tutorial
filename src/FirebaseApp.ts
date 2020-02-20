@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/functions";
 import { Dispatch } from "redux";
 
 import useSafeContext from "utils/safeContext";
@@ -18,11 +19,13 @@ const config = {
 
 class FirebaseApp {
   auth: firebase.auth.Auth;
+  listUsers: firebase.functions.HttpsCallable;
 
   constructor() {
     firebase.initializeApp(config);
 
     this.auth = firebase.auth();
+    this.listUsers = firebase.functions().httpsCallable("listUsers");
   }
 
   config = () => firebase.app().options;
