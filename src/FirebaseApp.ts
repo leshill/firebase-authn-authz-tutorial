@@ -20,12 +20,14 @@ const config = {
 class FirebaseApp {
   auth: firebase.auth.Auth;
   listUsers: firebase.functions.HttpsCallable;
+  toggleAdmin: firebase.functions.HttpsCallable;
 
   constructor() {
     firebase.initializeApp(config);
 
     this.auth = firebase.auth();
     this.listUsers = firebase.functions().httpsCallable("listUsers");
+    this.toggleAdmin = firebase.functions().httpsCallable("toggleAdmin");
   }
 
   config = () => firebase.app().options;
