@@ -23,6 +23,13 @@ function fromAdminRecord(user: admin.auth.UserRecord): any {
   return adminRecord;
 }
 
+async function reloadUser(uid: string): Promise<admin.auth.UserRecord> {
+  return admin.auth().getUser(uid)
+    .catch((error) => {
+      throw new functions.https.HttpsError("internal", error.message);
+    });
+}
+
 function setCustomUserClaims(uid: string, claims: any): Promise<void> {
   return admin.auth().setCustomUserClaims(uid, claims);
 }
@@ -68,5 +75,35 @@ export const onCreate = functions.auth.user()
       return setCustomUserClaims(user.uid, {admin: true});
     } else {
       return Promise.resolve();
+    }
+  });
+
+export const toggleAdmin = functions.https.onCall(
+  async (
+    data: any,
+    context: functions.https.CallableContext
+  ): Promise<void> => {
+    validateAdmin(context);
+
+    if (!data.uid || !data.hasOwnProperty("admin")) {
+      throw new functions.https.HttpsError(
+        "failed-precondition",
+        "missing parameter"
+      );
+    } else {
+      return reloadUser(data.uid).then((user: admin.auth.UserRecord) => {
+        const claims: any = user.customClaims || {};
+
+        if (claims.admin && !data.admin) {
+          delete claims.admin;
+        } else if (!claims.admin && data.admin){
+          claims.admin = true;
+        } else {
+          // Already set
+          return Promise.resolve();
+        }
+
+        return setCustomUserClaims(data.uid, claims);
+      });
     }
   });
