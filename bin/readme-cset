@@ -1,0 +1,47 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+@shas = `git rev-list HEAD`.split.reverse
+@next_sha = 0
+
+file = ARGV[0]
+lines = File.readlines(file)
+
+def changeset(match)
+  num = num_from_match(match)
+  sha = short_sha(num)
+  "Changeset: [#{sha}]" \
+  "(https://github.com/leshill/firebase-authn-authz-tutorial/commit/#{sha})"
+end
+
+def commit(match)
+  num = num_from_match(match)
+  short_sha num
+end
+
+CHANGESET = /CSET(\d*)/.freeze
+COMMIT = /CMT(\d*)/.freeze
+
+def convert(line)
+  if (match = line.match(CHANGESET))
+    line.gsub CHANGESET, changeset(match)
+  elsif (match = line.match(COMMIT))
+    line.gsub COMMIT, commit(match)
+  else
+    line
+  end
+end
+
+def num_from_match(match)
+  num = match[1] == "" ? @next_sha : match[1].to_i
+  @next_sha = num + 1
+  num
+end
+
+def short_sha(num)
+  @shas[num][0..6]
+end
+
+lines.each do |line|
+  puts convert(line)
+end
