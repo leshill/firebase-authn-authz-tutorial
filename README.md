@@ -147,11 +147,11 @@ ensure that only the matching route is rendered. Also implement the
   );
 ```
 
+Changeset: [f05da61](https://github.com/leshill/firebase-authn-authz-tutorial/commit/f05da61)
+
 Ensure that `yarn` is serving the app, you may need to run `yarn start`. Try the
 app out and navigate to the home and landing pages. Try navigating to an
 undefined route like `https://localhost:3000/missing`.
-
-Changeset: [f05da61](https://github.com/leshill/firebase-authn-authz-tutorial/commit/f05da61)
 
 # Configure the app for Firebase
 
@@ -267,15 +267,15 @@ const Home: React.FC = () => {
 };
 ```
 
-Try the app out and verify the updated message from the `<Home>` component.
-
 Changeset: [2dc42b7](https://github.com/leshill/firebase-authn-authz-tutorial/commit/2dc42b7)
+
+Try the app out and verify the updated message from the `<Home>` component.
 
 # Build the sign-up UI with Firebase
 
-Firebase provides multiple sign-in providers, including Google, Facebook, and
-others. For this tutorial you will use the `Email/Password` provider. Enable the
-provider under the Authentication section of the Firebase console.
+Firebase provides multiple authentication providers, including Google, Facebook,
+and others. For this tutorial you will use the `Email/Password` provider. Enable
+the provider under the Authentication section of the Firebase console.
 
 To use the `Email/Password` provider, the app will need to provide an email
 address and password to sign up a new user.
@@ -286,7 +286,8 @@ password are present, and that the password and confirmation match before
 allowing the user to submit the form. Initially, the form submit should just
 trigger an alert.
 
-Create a new file `src/SignUp.tsx` and generate the initial `<SignUp>` component:
+Create a new file `src/SignUp.tsx` and implement the initial `<SignUp>`
+component:
 
 ```ts
 const initialState = {
@@ -348,10 +349,10 @@ const SignUp: React.FC = () => {
 Put a link to the sign-up page on the landing page, and add an exact route to
 `src/App.tsx`.
 
+Changeset: [326cb47](https://github.com/leshill/firebase-authn-authz-tutorial/commit/326cb47)
+
 Navigate to the landing page and click the _Sign Up_ link. Verify that your form
 correctly submits the email and password to the alert box.
-
-Changeset: [326cb47](https://github.com/leshill/firebase-authn-authz-tutorial/commit/326cb47)
 
 Instead of just showing an alert when the user submits the form, you will have
 the app use the Firebase `createUserWithEmailAndPassword` API to create the
@@ -397,7 +398,7 @@ method is ignored.
 
 On error, the error message is displayed to the user.
 
-Changeset: [5abf987](https://github.com/leshill/firebase-authn-authz-tutorial/commit/5abf987)
+Changeset: [64103e3](https://github.com/leshill/firebase-authn-authz-tutorial/commit/64103e3)
 
 As a test, check the Firebase current user in `<Home>`. Edit `src/Home.tsx`:
 
@@ -410,7 +411,7 @@ As a test, check the Firebase current user in `<Home>`. Edit `src/Home.tsx`:
       </p>
 ```
 
-Changeset: [c34c609](https://github.com/leshill/firebase-authn-authz-tutorial/commit/c34c609)
+Changeset: [ff012e5](https://github.com/leshill/firebase-authn-authz-tutorial/commit/ff012e5)
 
 Try the form out using a malformed email such as `not-an-email.com`.
 
@@ -459,10 +460,9 @@ const Navigation: React.FC = () => {
 };
 ```
 
-Changeset: [54bb422](https://github.com/leshill/firebase-authn-authz-tutorial/commit/54bb422)
+Changeset: [1806c4e](https://github.com/leshill/firebase-authn-authz-tutorial/commit/1806c4e)
 
-At this point, clicking the link will generate an alert, but not actually sign
-the user out.
+Verify that clicking the link will generate an alert.
 
 Add a `signOut` method to the `FirebaseApp` class to actually sign the user out:
 
@@ -481,7 +481,7 @@ the context and invoke the new `signOut` method from the click handler. Edit
   };
 ```
 
-Changeset: [eca9368](https://github.com/leshill/firebase-authn-authz-tutorial/commit/eca9368)
+Changeset: [93abe7c](https://github.com/leshill/firebase-authn-authz-tutorial/commit/93abe7c)
 
 Try it and verify that the current user is signed out by navigating to the home page.
 
@@ -546,10 +546,10 @@ const SignIn: React.FC = () => {
 Add a link to the sign-in page from the landing page, and add an exact route to
 `src/App.tsx`.
 
+Changeset: [1b3a308](https://github.com/leshill/firebase-authn-authz-tutorial/commit/1b3a308)
+
 Navigate to _Sign In_ and verify that your form correctly submits the email and
 password to the alert box.
-
-Changeset: [95ce06e](https://github.com/leshill/firebase-authn-authz-tutorial/commit/95ce06e)
 
 When the user submits the form, the app will use the Firebase
 `signInWithEmailAndPassword` API to sign in the user.
@@ -589,16 +589,16 @@ signed in state with Redux next.
 
 On error, the error message is displayed to the user.
 
-Changeset: [f678012](https://github.com/leshill/firebase-authn-authz-tutorial/commit/f678012)
+Changeset: [823de9b](https://github.com/leshill/firebase-authn-authz-tutorial/commit/823de9b)
 
 Sign out, then attempt to sign in. Verify that the user is signed in on the home
 page.
 
 # Use Redux to manage the current user
 
-All the pieces needed to manage the current user's signed in state with Redux
-are now in place. You will create a Redux _slice_ to manage the state of the
-current user in the app.
+All the pieces needed to manage the authentication state with Redux are now in place.
+You will create a Redux _slice_ to manage the state of the current user in the
+app.
 
 **Nomenclature digression:** A _slice_ is Redux-speak for state and associated
 code for one specific sub-tree of the state tree. For example, the app will
@@ -642,7 +642,7 @@ function App() {
 }
 ```
 
-Changeset: [79da93e](https://github.com/leshill/firebase-authn-authz-tutorial/commit/79da93e)
+Changeset: [6a0dd99](https://github.com/leshill/firebase-authn-authz-tutorial/commit/6a0dd99)
 
 Redux Toolkit allows you to easily combine the state and code for a _slice_ using
 the kitchen-sink API `createSlice`. Create the `auth` _slice_ in the new file
@@ -685,7 +685,7 @@ const rootReducer = combineReducers({
 });
 ```
 
-Changeset: [d00bdbf](https://github.com/leshill/firebase-authn-authz-tutorial/commit/d00bdbf)
+Changeset: [c4426fc](https://github.com/leshill/firebase-authn-authz-tutorial/commit/c4426fc)
 
 The current user is now part of the state in the Redux store and can be used by
 the UI. Edit `src/Navigation.tsx` and split the links in the `<Navigation>`
@@ -711,7 +711,7 @@ const Navigation: React.FC = () => {
 };
 ```
 
-Changeset: [ecd9060](https://github.com/leshill/firebase-authn-authz-tutorial/commit/ecd9060)
+Changeset: [6ce4179](https://github.com/leshill/firebase-authn-authz-tutorial/commit/6ce4179)
 
 The initial state of the `auth` slice is a `null` current user. Verify that the
 `<Navigation>` component is showing the unauthenticated links.
@@ -736,14 +736,14 @@ in the Redux store. Make this temporary change in `src/SignIn.tsx`:
   };
 ```
 
-Changeset: [460dddc](https://github.com/leshill/firebase-authn-authz-tutorial/commit/460dddc)
+Changeset: [efb71ff](https://github.com/leshill/firebase-authn-authz-tutorial/commit/efb71ff)
 
 Sign in to the app and the `<Navigation>` component will re-render with the
 authenticated links.
 
 Revert the change; if you are using the command line, use `git revert head`.
 
-Changeset: [b59f313](https://github.com/leshill/firebase-authn-authz-tutorial/commit/b59f313)
+Changeset: [c05de7f](https://github.com/leshill/firebase-authn-authz-tutorial/commit/c05de7f)
 
 Instead of having to track every use of the Firebase Authentication API
 throughout the app, Firebase provides a method to register a handler that will
@@ -772,7 +772,7 @@ Edit `src/FirebaseApp.ts` and implement `trackAuthStateChanged`:
 When Firebase invokes the handler, the appropriate `userChanged` event is
 dispatched to Redux to update the current user.
 
-Changeset: [41b9a32](https://github.com/leshill/firebase-authn-authz-tutorial/commit/41b9a32)
+Changeset: [d0c9ae8](https://github.com/leshill/firebase-authn-authz-tutorial/commit/d0c9ae8)
 
 `trackAuthStateChanged` could be used by the app to manage the current user in a
 few ways:
@@ -811,7 +811,7 @@ const TrackAuth: React.FC = ({ children }) => {
 The `useEffect` hook registers the handler when initially rendered, and will
 unregister the handler when the `<TrackAuth>` component is unmounted.
 
-Changeset: [a289632](https://github.com/leshill/firebase-authn-authz-tutorial/commit/a289632)
+Changeset: [b3dd717](https://github.com/leshill/firebase-authn-authz-tutorial/commit/b3dd717)
 
 Use `<TrackAuth>` from the `<App>` component to cover the life-cycle of the
 entire app. Edit `src/App.tsx`:
@@ -830,7 +830,7 @@ function App() {
 }
 ```
 
-Changeset: [a08a04e](https://github.com/leshill/firebase-authn-authz-tutorial/commit/a08a04e)
+Changeset: [d10f8a7](https://github.com/leshill/firebase-authn-authz-tutorial/commit/d10f8a7)
 
 Now that the current user's status is available in the `auth` _slice_, you can
 have a successful sign in redirect the user to the `<Home>` page.
@@ -875,7 +875,7 @@ const signedOutOnly: <P extends object>(Wrapped: React.ComponentType<P>) =>
 _Note that this code is more verbose than necessary in order to satisfy the
 TypeScript linter._
 
-Changeset: [b3c4728](https://github.com/leshill/firebase-authn-authz-tutorial/commit/b3c4728)
+Changeset: [4ae6753](https://github.com/leshill/firebase-authn-authz-tutorial/commit/4ae6753)
 
 Use the HOC to wrap the `<SignIn>` component and give it the desired behavior.
 Edit `src/SignIn.tsx`:
@@ -884,19 +884,19 @@ Edit `src/SignIn.tsx`:
 export default signedOutOnly(SignIn);
 ```
 
-Changeset: [137b83d](https://github.com/leshill/firebase-authn-authz-tutorial/commit/137b83d)
+Changeset: [08c5a1b](https://github.com/leshill/firebase-authn-authz-tutorial/commit/08c5a1b)
 
 Try signing out and signing back in to see the effect on the `<SignIn>`
 component.
 
 You should now add the new behavior to the `<SignUp>` component.
 
-Changeset: [1672532](https://github.com/leshill/firebase-authn-authz-tutorial/commit/1672532)
+Changeset: [b2fa709](https://github.com/leshill/firebase-authn-authz-tutorial/commit/b2fa709)
 
 **Security Caveat:** By having the current user in the Redux store, the app can
 easily determine the authentication and authorization status of the user and use
-that to show the appropriate user interface. You should not depend on it for
-other security concerns as all code in browsers is easily subverted. The
+that data to show the appropriate user interface. You should not depend on it
+for other security concerns as code in the browser is easily subverted. The
 tutorial will cover more of this later.
 
 # Making it nicer: persisting the current user with local storage
@@ -919,7 +919,7 @@ current user:
     });
 ```
 
-Changeset: [52dee30](https://github.com/leshill/firebase-authn-authz-tutorial/commit/52dee30)
+Changeset: [25cd991](https://github.com/leshill/firebase-authn-authz-tutorial/commit/25cd991)
 
 Ensure you are signed in. Refresh the page to reload the code. Click on the
 `Sign In` navigation link and wait for the delay to expire. You should see that
@@ -969,7 +969,7 @@ const authSlice = createSlice({
 });
 ```
 
-Changeset: [5a40de1](https://github.com/leshill/firebase-authn-authz-tutorial/commit/5a40de1)
+Changeset: [022c9f8](https://github.com/leshill/firebase-authn-authz-tutorial/commit/022c9f8)
 
 To view the new behavior, ensure you are signed in. Navigate to the landing page
 which has the `Sign In` link. Refresh the page to reload the code. Click on the
@@ -985,7 +985,7 @@ that case is left as an exercise.
 Revert the previous change with the delay; if you are using the command line,
 use `git revert head~`.
 
-Changeset: [2d22d3a](https://github.com/leshill/firebase-authn-authz-tutorial/commit/2d22d3a)
+Changeset: [41f380f](https://github.com/leshill/firebase-authn-authz-tutorial/commit/41f380f)
 
 The app now has basic user authentication in place, allowing users to sign up,
 sign in, and sign out. Of course, your app will need additional features such as
@@ -1002,7 +1002,7 @@ Firebase Functions can be invoked as an API from server-side or client-side code
 as an HTTPS service, and by Firebase itself with triggers.
 
 Firebase triggers are callbacks from Firebase services such as the Firebase
-Authentication service which can trigger a Firebase Function after creating a
+Authentication service which can invoke a Firebase Function after creating a
 user.
 
 Some setup is required to create the Functions application that will be deployed
@@ -1010,7 +1010,7 @@ to Firebase.
 
 Start by ignoring the file `.firebaserc` in `.gitignore`.
 
-Changeset: [3486b78](https://github.com/leshill/firebase-authn-authz-tutorial/commit/3486b78)
+Changeset: [c866c33](https://github.com/leshill/firebase-authn-authz-tutorial/commit/c866c33)
 
 Install `firebase-tools` to get the Firebase CLI:
 
@@ -1036,7 +1036,7 @@ At this point, your project directory has the necessary files to deploy a
 skeleton Firebase Functions app. Commit the `firebase.json` file and the
 `functions` directory.
 
-Changeset: [785943d](https://github.com/leshill/firebase-authn-authz-tutorial/commit/785943d)
+Changeset: [277b0f2](https://github.com/leshill/firebase-authn-authz-tutorial/commit/277b0f2)
 
 Change the Functions runtime from the default to use Node v10.16.2, which is the
 latest version available at the time this was written. Edit
@@ -1074,7 +1074,7 @@ Use yarn to install the dependencies for the Firebase Functions in the
 
 `cd functions; yarn install; cd ..`
 
-Changeset: [70a767b](https://github.com/leshill/firebase-authn-authz-tutorial/commit/70a767b)
+Changeset: [86ab02b](https://github.com/leshill/firebase-authn-authz-tutorial/commit/86ab02b)
 
 You have completed the Firebase Functions setup for your project, and can now
 implement the API you will need for the Admin UI.
@@ -1104,7 +1104,7 @@ admin.initializeApp();
 **Note:** The second import is used for its side-effect only, similar to the
 `firebase/auth` import you added earlier.
 
-Changeset: [b3860d2](https://github.com/leshill/firebase-authn-authz-tutorial/commit/b3860d2)
+Changeset: [059f32b](https://github.com/leshill/firebase-authn-authz-tutorial/commit/059f32b)
 
 To bootstrap the Admin role, the app will recognize a particular email as being
 an admin. The user with that email will be given the Admin role and be able to
@@ -1145,7 +1145,7 @@ The `onCreate` trigger will run for each user created by Firebase. If the user i
 being created by the `Email/Password` sign-in provider and has an email that
 matches the configured default admin email, the admin claim is set on the user.
 
-Changeset: [0a56031](https://github.com/leshill/firebase-authn-authz-tutorial/commit/0a56031)
+Changeset: [8d0230b](https://github.com/leshill/firebase-authn-authz-tutorial/commit/8d0230b)
 
 At the moment, there does not appear to be a way to view custom claims in the
 Firebase console. Instead display the Admin role for the current user on the
@@ -1170,7 +1170,7 @@ home page. Edit `src/Home.tsx`:
       </p>
 ```
 
-Changeset: [d1c5dc1](https://github.com/leshill/firebase-authn-authz-tutorial/commit/d1c5dc1)
+Changeset: [a1951b7](https://github.com/leshill/firebase-authn-authz-tutorial/commit/a1951b7)
 
 # Deploy Firebase Functions
 
@@ -1238,7 +1238,7 @@ export const listUsers = functions.https.onCall(
 ```
 
 
-Changeset: [f2d9f92](https://github.com/leshill/firebase-authn-authz-tutorial/commit/f2d9f92)
+Changeset: [95aec73](https://github.com/leshill/firebase-authn-authz-tutorial/commit/95aec73)
 
 Use the CLI to deploy the `listUsers` API:
 
@@ -1258,7 +1258,7 @@ class, edit `src/FirebaseApp.ts`:
   }
 ```
 
-Changeset: [75a6225](https://github.com/leshill/firebase-authn-authz-tutorial/commit/75a6225)
+Changeset: [935499e](https://github.com/leshill/firebase-authn-authz-tutorial/commit/935499e)
 
 The `<Admin>` component will show the list of users. To demonstrate that the
 validation check in the API is working, you will add the link to the `<Admin>`
@@ -1269,7 +1269,7 @@ successfully call into the `listUsers` API.
 Create `src/Admin.tsx` with a basic `<Admin>` component and add it to the
 authenticated links of `<Navigation>`.
 
-Changeset: [81f73d7](https://github.com/leshill/firebase-authn-authz-tutorial/commit/81f73d7)
+Changeset: [d8e9be5](https://github.com/leshill/firebase-authn-authz-tutorial/commit/d8e9be5)
 
 Use the `listUsers` method and local React state in the `<Admin>` component to
 manage the list of users. Implement the list in `src/Admin.tsx`:
@@ -1325,7 +1325,7 @@ const Admin: React.FC = () => {
 };
 ```
 
-Changeset: [434c015](https://github.com/leshill/firebase-authn-authz-tutorial/commit/434c015)
+Changeset: [ceaa5b3](https://github.com/leshill/firebase-authn-authz-tutorial/commit/ceaa5b3)
 
 Try it by navigating to the `<Admin>` component.
 
@@ -1382,7 +1382,7 @@ export const toggleAdmin = functions.https.onCall(
 Note that the `toggleAdmin` API requires both an `admin: boolean` and `uid:
 string` as parameters.
 
-Changeset: [5dceb2b](https://github.com/leshill/firebase-authn-authz-tutorial/commit/5dceb2b)
+Changeset: [8fa4821](https://github.com/leshill/firebase-authn-authz-tutorial/commit/8fa4821)
 
 Use the CLI to deploy the `toggleAdmin` API:
 
@@ -1401,7 +1401,7 @@ function in the `FirebaseApp` class. Edit `src/FirebaseApp.ts`:
   }
 ```
 
-Changeset: [2902108](https://github.com/leshill/firebase-authn-authz-tutorial/commit/2902108)
+Changeset: [a1432ee](https://github.com/leshill/firebase-authn-authz-tutorial/commit/a1432ee)
 
 Simplify the `<Admin>` component by extracting the user display into a `<User>`
 component. For this app, keep the toggling logic in `<Admin>` and create a
@@ -1504,7 +1504,7 @@ const User: React.FC<{ user: any,
       </ul>
 ```
 
-Changeset: [b96badd](https://github.com/leshill/firebase-authn-authz-tutorial/commit/b96badd)
+Changeset: [ab56c30](https://github.com/leshill/firebase-authn-authz-tutorial/commit/ab56c30)
 
 Try toggling the admin status. If you toggle the admin role for the signed in
 user, the admin status of user will not change. Signing out and signing back in

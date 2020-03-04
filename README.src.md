@@ -147,11 +147,11 @@ ensure that only the matching route is rendered. Also implement the
   );
 ```
 
+CSET
+
 Ensure that `yarn` is serving the app, you may need to run `yarn start`. Try the
 app out and navigate to the home and landing pages. Try navigating to an
 undefined route like `https://localhost:3000/missing`.
-
-CSET
 
 # Configure the app for Firebase
 
@@ -267,15 +267,15 @@ const Home: React.FC = () => {
 };
 ```
 
-Try the app out and verify the updated message from the `<Home>` component.
-
 CSET
+
+Try the app out and verify the updated message from the `<Home>` component.
 
 # Build the sign-up UI with Firebase
 
-Firebase provides multiple sign-in providers, including Google, Facebook, and
-others. For this tutorial you will use the `Email/Password` provider. Enable the
-provider under the Authentication section of the Firebase console.
+Firebase provides multiple authentication providers, including Google, Facebook,
+and others. For this tutorial you will use the `Email/Password` provider. Enable
+the provider under the Authentication section of the Firebase console.
 
 To use the `Email/Password` provider, the app will need to provide an email
 address and password to sign up a new user.
@@ -286,7 +286,8 @@ password are present, and that the password and confirmation match before
 allowing the user to submit the form. Initially, the form submit should just
 trigger an alert.
 
-Create a new file `src/SignUp.tsx` and generate the initial `<SignUp>` component:
+Create a new file `src/SignUp.tsx` and implement the initial `<SignUp>`
+component:
 
 ```ts
 const initialState = {
@@ -348,10 +349,10 @@ const SignUp: React.FC = () => {
 Put a link to the sign-up page on the landing page, and add an exact route to
 `src/App.tsx`.
 
+CSET
+
 Navigate to the landing page and click the _Sign Up_ link. Verify that your form
 correctly submits the email and password to the alert box.
-
-CSET
 
 Instead of just showing an alert when the user submits the form, you will have
 the app use the Firebase `createUserWithEmailAndPassword` API to create the
@@ -461,8 +462,7 @@ const Navigation: React.FC = () => {
 
 CSET
 
-At this point, clicking the link will generate an alert, but not actually sign
-the user out.
+Verify that clicking the link will generate an alert.
 
 Add a `signOut` method to the `FirebaseApp` class to actually sign the user out:
 
@@ -546,10 +546,10 @@ const SignIn: React.FC = () => {
 Add a link to the sign-in page from the landing page, and add an exact route to
 `src/App.tsx`.
 
+CSET
+
 Navigate to _Sign In_ and verify that your form correctly submits the email and
 password to the alert box.
-
-CSET
 
 When the user submits the form, the app will use the Firebase
 `signInWithEmailAndPassword` API to sign in the user.
@@ -596,9 +596,9 @@ page.
 
 # Use Redux to manage the current user
 
-All the pieces needed to manage the current user's signed in state with Redux
-are now in place. You will create a Redux _slice_ to manage the state of the
-current user in the app.
+All the pieces needed to manage the authentication state with Redux are now in place.
+You will create a Redux _slice_ to manage the state of the current user in the
+app.
 
 **Nomenclature digression:** A _slice_ is Redux-speak for state and associated
 code for one specific sub-tree of the state tree. For example, the app will
@@ -895,8 +895,8 @@ CSET
 
 **Security Caveat:** By having the current user in the Redux store, the app can
 easily determine the authentication and authorization status of the user and use
-that to show the appropriate user interface. You should not depend on it for
-other security concerns as all code in browsers is easily subverted. The
+that data to show the appropriate user interface. You should not depend on it
+for other security concerns as code in the browser is easily subverted. The
 tutorial will cover more of this later.
 
 # Making it nicer: persisting the current user with local storage
@@ -1002,7 +1002,7 @@ Firebase Functions can be invoked as an API from server-side or client-side code
 as an HTTPS service, and by Firebase itself with triggers.
 
 Firebase triggers are callbacks from Firebase services such as the Firebase
-Authentication service which can trigger a Firebase Function after creating a
+Authentication service which can invoke a Firebase Function after creating a
 user.
 
 Some setup is required to create the Functions application that will be deployed
