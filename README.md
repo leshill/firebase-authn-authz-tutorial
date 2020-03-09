@@ -623,6 +623,7 @@ export default rootReducer;
 Create the Redux store in a new file `src/store.ts`:
 
 ```ts
+import { configureStore } from "@reduxjs/toolkit";
 import rootReducer from "rootReducer";
 
 const store = configureStore({
