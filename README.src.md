@@ -205,9 +205,9 @@ REACT_APP_APP_ID=ID
 REACT_APP_MEASUREMENT_ID=ID
 ```
 
-The app will read the configuration at build time from the environment. Copy the
-config snippet again and paste it into a new file `src/FirebaseApp.ts` and edit
-it as needed for your project:
+Stop and restart `yarn start`. The app will read the configuration at build time
+from the environment. Copy the config snippet again and paste it into a new file
+`src/FirebaseApp.ts` and edit it as needed for your project:
 
 ```ts
 const config = {
