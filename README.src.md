@@ -1,6 +1,6 @@
 # firebase-authn-authz-tutorial
 
-React/Redux with Firebase authentication and authorization TypeScript tutorial
+React/Redux with Firebase authentication and authorization tutorial using TypeScript
 
 # Introduction
 
